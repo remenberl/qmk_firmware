@@ -599,6 +599,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_DOWN:
             strcpy(keystr, "DOWN     ");
             break;
+        default:
+            break;
+    }
+    switch(keycode) {
         case F_LABEL:
             keycode = 9;
             if(record->event.pressed) {
