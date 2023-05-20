@@ -46,9 +46,6 @@ enum custom_keycodes {
 
 /* Keymap macros - @jialu */
 #define RESET QK_BOOT
-#define LABEL SGUI(KC_ENT)
-#define SEARCH SGUI(KC_SLSH)
-#define SCROLL SGUI(KC_J)
 #define LFTWIN LSA(KC_J)
 #define RGTWIN LSA(KC_K)
 #define ALTTAB LALT_T(KC_TAB)
@@ -158,9 +155,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                       LFTWIN,  RGTWIN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-      XXXXXXX,    SCN1,    SCN2,    SCN3,   LABEL, XXXXXXX,                      XXXXXXX,  PRESCN, NXTSCN, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX,    SCN1,    SCN2,    SCN3, KC_WH_U, XXXXXXX,                      XXXXXXX,  PRESCN, NXTSCN,  XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  SCROLL, XXXXXXX, XXXXXXX,  SEARCH, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_D, XXXXXXX,                      KC_PGUP, KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
