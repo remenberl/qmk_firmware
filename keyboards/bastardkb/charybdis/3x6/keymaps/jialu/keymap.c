@@ -13,7 +13,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ *
+ * qmk flash -kb bastardkb/charybdis/3x6/v2/splinky_2 -km jialu
+*/
 #include QMK_KEYBOARD_H
 
 enum custom_keycodes {
