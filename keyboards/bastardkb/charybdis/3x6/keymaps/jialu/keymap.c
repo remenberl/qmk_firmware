@@ -116,11 +116,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_TRNS,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-       CTLESC, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,SCLN_SCR, XXXXXXX,
+       CTLESC, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2,			 KC_BTN2, KC_BTN1, XXXXXXX, XXXXXXX,SCLN_SCR, XXXXXXX,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_BTN3,   MO(1), KC_BTN2,    KC_BTN1, KC_BTN2
+                                          KC_BTN3,   MO(1), KC_BTN2,    KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -144,7 +144,7 @@ bool isSneaking = false;
 
 void handle_tap_hold_keycode(uint16_t* keycode, uint16_t timer) {
     if (*keycode == 0) return;
-    uint16_t tapping_term = 170;
+    uint16_t tapping_term = 200;
     if (*keycode == KC_N || *keycode == KC_M) {
         tapping_term = 300;
     }
