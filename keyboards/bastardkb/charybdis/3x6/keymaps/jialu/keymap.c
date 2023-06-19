@@ -28,6 +28,7 @@ enum custom_keycodes {
   U_RWIN,
   N_BACK,
   M_FWD,
+  QUO_SCL,
 };
 
 #define RESET QK_BOOT
@@ -73,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* NUMBERS */
   [1] = LAYOUT(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_NO,   KC_NO, KC_MINS,  KC_EQL,   KC_NO,   KC_NO,                       PRETAB,  NXTTAB, KC_LBRC, KC_RBRC,   KC_UP,  KC_DEL,
+       KC_TAB,   KC_NO, KC_MINS,  KC_EQL,   KC_NO,   KC_NO,                       PRETAB,  NXTTAB, KC_LBRC, KC_RBRC,   KC_UP,  KC_DEL,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
        KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9, KC_LEFT, KC_RGHT,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
@@ -113,13 +114,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* MOMENTARY MOUSE BUTTONS */
   [4] = LAYOUT(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_TRNS,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_TRNS,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_U, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       CTLESC, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,SCLN_SCR, XXXXXXX,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_ACL0, KC_ACL1, KC_ACL2, KC_WH_D, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_BTN3, KC_BTN1, KC_BTN2,    KC_BTN1, KC_BTN2
+                                          KC_BTN3,   MO(1), KC_BTN2,    KC_BTN1, KC_BTN2
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -185,77 +186,73 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint16_t tap_hold_keycode;
     switch(keycode) {
         case SFTLFT:
-            if (record->event.pressed) {
-                isBarking = true;
-            } else {
-                isBarking = false;
-            }
+	    isBarking = record->event.pressed;
             break;
         case GUIRT:
-            if (record->event.pressed) {
-                isSneaking = true;
-            } else {
-                isSneaking = false;
-            }
+	    isSneaking = record->event.pressed;
             break;
+	case CTLESC:
+	    charybdis_set_pointer_sniping_enabled(record->event.pressed);
+	    break;
+	case SCLN_SCR:
+	    charybdis_set_pointer_dragscroll_enabled(record->event.pressed);
+	    if(record->event.pressed) {
+	        timer = timer_read();
+	    } else {
+		if (timer_elapsed(timer) < TAPPING_TERM) {
+		    SEND_STRING(";");
+		}
+	    }
+	    break;
         case F_LABEL:
-            keycode = 9;
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_F;
-                timer = timer_read();
-            } else {
-                handle_tap_hold_keycode(&tap_hold_keycode, timer);
-            }
-            break;
-        case SCLN_SCR:
-            keycode = 51;
-            if(record->event.pressed) {
-                tap_hold_keycode = KC_SCLN;
+            	tap_hold_keycode = KC_F;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
             }
             break;
         case SLSH_SCH:
-            keycode = 56;
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_SLSH;
+            	tap_hold_keycode = KC_SLSH;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
             }
             break;
         case Y_LWIN:
-            keycode = 28;
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_Y;
+            	tap_hold_keycode = KC_Y;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
             }
             break;
         case U_RWIN:
-            keycode = 24;
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_U;
+            	tap_hold_keycode = KC_U;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
             }
             break;
         case N_BACK:
-            keycode = 17;
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_N;
+            	tap_hold_keycode = KC_N;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
             }
             break;
         case M_FWD:
-            keycode = 16;
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_M;
+            	tap_hold_keycode = KC_M;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
@@ -269,40 +266,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-static uint16_t auto_buttons_timer;
-extern int tp_buttons; // mousekey button state set in action.c and used in ps2_mouse.c
-
-void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
-  if (auto_buttons_timer) {
-    auto_buttons_timer = timer_read();
-  } else {
-    if (!tp_buttons) {
-      layer_on(4);
-      auto_buttons_timer = timer_read();
-    }
-  }
-}
-
-void matrix_scan_user(void) {
-  if (auto_buttons_timer && (timer_elapsed(auto_buttons_timer) > 750)) {
-    if (!tp_buttons) {
-      layer_off(4);
-      auto_buttons_timer = 0;
-    }
-  }
-}
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-  switch (get_highest_layer(state)) {
-    case 4:
-      charybdis_set_pointer_dragscroll_enabled(false);
-      break;
-    case 1:
-      charybdis_set_pointer_dragscroll_enabled(true);
-      break;
-    default: //  for any other layers, or the default layer
-      charybdis_set_pointer_dragscroll_enabled(false);
-      break;
-  }
-  return state;
+void pointing_device_init_user(void) {
+  set_auto_mouse_enable(true);
 }
