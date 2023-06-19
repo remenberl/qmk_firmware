@@ -14,9 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * qmk flash -kb bastardkb/charybdis/3x6/v2/splinky_2 -km jialu
+ * qmk flash -kb bastardkb/charybdis/3x6/v2/splinky_3 -km jialu
 */
 #include QMK_KEYBOARD_H
+
+//#include "ps2_mouse.h"
 
 enum custom_keycodes {
   F_LABEL = SAFE_RANGE,
@@ -265,4 +267,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
     return true;
+}
+
+static uint16_t auto_buttons_timer;
+extern int tp_buttons; // mousekey button state set in action.c and used in ps2_mouse.c
+
+void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
+  if (auto_buttons_timer) {
+    auto_buttons_timer = timer_read();
+  } else {
+    if (!tp_buttons) {
+      layer_on(4);
+      auto_buttons_timer = timer_read();
+    }
+  }
+}
+
+void matrix_scan_user(void) {
+  if (auto_buttons_timer && (timer_elapsed(auto_buttons_timer) > 750)) {
+    if (!tp_buttons) {
+      layer_off(4);
+      auto_buttons_timer = 0;
+    }
+  }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+    case 4:
+      charybdis_set_pointer_dragscroll_enabled(false);
+      break;
+    case 1:
+      charybdis_set_pointer_dragscroll_enabled(true);
+      break;
+    default: //  for any other layers, or the default layer
+      charybdis_set_pointer_dragscroll_enabled(false);
+      break;
+  }
+  return state;
 }
