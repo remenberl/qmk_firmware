@@ -39,6 +39,8 @@ enum custom_keycodes {
 #define RSFDEL RSFT_T(KC_DEL)
 #define GUIRT  LGUI_T(KC_RGHT)
 #define SFTLFT LSFT_T(KC_LEFT)
+#define NUMBUT LT(2,KC_BTN1)
+#define SYMBUT LT(3,KC_BTN2)
 #define ENTMOU LT(4,KC_ENT)
 #define SPCSCRN LT(5,KC_SPC)
 #define PRETAB RCS(KC_TAB)
@@ -66,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
        SFTLFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       N_BACK,   M_FWD, KC_COMM,  KC_DOT,SLSH_SCH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            GUIRT,   MO(2),  KC_SPC,    SPCSCRN,   MO(3)
+                                            GUIRT,  NUMBUT,  KC_SPC,    SPCSCRN,  SYMBUT 
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -201,15 +203,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case GUIRT:
 	        isSneaking = record->event.pressed;
             break;
-	    case CTLESC:
+        case CTLESC:
 	        charybdis_set_pointer_sniping_enabled(record->event.pressed);
 	        break;
-	    case SCLN_SCR:
+	case SCLN_SCR:
 	        charybdis_set_pointer_dragscroll_enabled(record->event.pressed);
 	        if(record->event.pressed) {
 	            timer = timer_read();
 	        } else {
-		        if (timer_elapsed(timer) < TAPPING_TERM) {
+		        if (timer_elapsed(timer) < 300) {
 		            SEND_STRING(";");
 		        }
 	        }
@@ -288,3 +290,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void pointing_device_init_user(void) {
   set_auto_mouse_enable(true);
 }
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case NUMBUT:
+            return 3000;
+        case SYMBUT:
+            return 3000;
+        case SPCSCRN:
+            return 3000;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
