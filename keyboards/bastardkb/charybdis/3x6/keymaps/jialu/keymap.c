@@ -21,7 +21,7 @@
 //#include "ps2_mouse.h"
 
 enum custom_keycodes {
-  F_LABEL = SAFE_RANGE,
+  G_LABEL = SAFE_RANGE,
   SCLN_SCR,
   SLSH_SCH,
   Y_LWIN,
@@ -62,17 +62,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        ALTTAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                       Y_LWIN,  U_RWIN,    KC_I,    KC_O,    KC_P, KC_BSPC,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-       CTLESC,    KC_A,    KC_S,    KC_D, F_LABEL,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,SCLN_SCR, KC_QUOT,
+       CTLESC,    KC_A,    KC_S,    KC_D,    KC_F, G_LABEL,                         KC_H,    KC_J,    KC_K,    KC_L,SCLN_SCR, KC_QUOT,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
-       SFTLFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       N_BACK,   M_FWD, KC_COMM,  KC_DOT,SLSH_SCH,  ENTMOU,
+       SFTLFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       N_BACK,   M_FWD, KC_COMM,  KC_DOT,SLSH_SCH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            GUIRT,   MO(1),  KC_SPC,    SPCSCRN,   MO(2)
+                                            GUIRT,   MO(2),  KC_SPC,    SPCSCRN,   MO(3)
                                       //`--------------------------'  `--------------------------'
   ),
 
 
-  /* NUMBERS */
+  /* MOMENTARY MOUSE BUTTONS */
   [1] = LAYOUT(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
+       CTLESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,			             KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS,SCLN_SCR, KC_TRNS,
+  //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_BTN3, KC_TRNS, KC_BTN2,    KC_TRNS, KC_TRNS
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  /* NUMBERS */
+  [2] = LAYOUT(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB,   KC_NO, KC_MINS,  KC_EQL,   KC_NO,   KC_NO,                       PRETAB,  NXTTAB, KC_LBRC, KC_RBRC,   KC_UP,  KC_DEL,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
@@ -80,12 +93,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,                       ALTLFT,   ALTRT, KC_BSLS,  KC_DOT, KC_DOWN,    KC_0,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, KC_TRNS, KC_TRNS,    KC_TRNS,   MO(3)
+                                          KC_LGUI, KC_TRNS, KC_TRNS,    KC_TRNS,   MO(4)
                                       //`--------------------------'  `--------------------------'
   ),
 
+
   /* SYMBOLS */
-  [2] = LAYOUT(
+  [3] = LAYOUT(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         KC_NO,   KC_NO, KC_UNDS, KC_PLUS,   KC_NO,   KC_NO,                        KC_NO,   KC_NO, KC_LCBR, KC_RCBR,   KC_NO,   KC_NO,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
@@ -93,13 +107,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
         KC_NO,   KC_NO,   KC_NO,    COPY,   PASTE,  SPASTE,                        KC_NO,   KC_NO, KC_PIPE, KC_RPRN, KC_HOME,  KC_END,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_TRNS,   MO(3), KC_TRNS,    KC_TRNS, KC_TRNS
+                                          KC_TRNS,   MO(4), KC_TRNS,    KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   ),
 
 
   /* SPECIALS */
-  [3] = LAYOUT(
+  [4] = LAYOUT(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                        KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
@@ -111,18 +125,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  /* MOMENTARY MOUSE BUTTONS */
-  [4] = LAYOUT(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_TRNS,
-  //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-       CTLESC, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_BTN2,			 KC_BTN2, KC_BTN1, XXXXXXX, XXXXXXX,SCLN_SCR, XXXXXXX,
-  //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_BTN3,   MO(1), KC_BTN2,    KC_TRNS, KC_TRNS
-                                      //`--------------------------'  `--------------------------'
-  ),
 
   /* SCREEN SWITCH */
   [5] = LAYOUT(
@@ -144,16 +146,23 @@ bool isSneaking = false;
 
 void handle_tap_hold_keycode(uint16_t* keycode, uint16_t timer) {
     if (*keycode == 0) return;
-    uint16_t tapping_term = 200;
+    uint16_t tapping_term = 300;
     if (*keycode == KC_N || *keycode == KC_M) {
         tapping_term = 300;
     }
     // Mod key is on. No need to process tap/hold.
     if (!isSneaking && !isBarking && timer_elapsed(timer) >= tapping_term) {
-        if (*keycode == KC_F || *keycode == KC_SCLN || *keycode == KC_SLSH || *keycode == KC_Y || *keycode == KC_U) {
+        if (*keycode == KC_G || *keycode == KC_SCLN || *keycode == KC_SLSH || *keycode == KC_Y || *keycode == KC_U) {
             register_code(KC_LGUI);
             register_code(KC_LSFT);
             tap_code(*keycode);
+            unregister_code(KC_LGUI);
+            unregister_code(KC_LSFT);
+        }
+        if (*keycode == KC_BTN2) {
+            register_code(KC_LGUI);
+            register_code(KC_LSFT);
+            tap_code(KC_G);
             unregister_code(KC_LGUI);
             unregister_code(KC_LSFT);
         }
@@ -167,6 +176,7 @@ void handle_tap_hold_keycode(uint16_t* keycode, uint16_t timer) {
             tap_code(KC_RBRC);
             unregister_code(KC_LGUI);
         }
+        layer_on(0);
     } else {
         tap_code(*keycode);
     }
@@ -186,28 +196,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint16_t tap_hold_keycode;
     switch(keycode) {
         case SFTLFT:
-	    isBarking = record->event.pressed;
+	        isBarking = record->event.pressed;
             break;
         case GUIRT:
-	    isSneaking = record->event.pressed;
+	        isSneaking = record->event.pressed;
             break;
-	case CTLESC:
-	    charybdis_set_pointer_sniping_enabled(record->event.pressed);
-	    break;
-	case SCLN_SCR:
-	    charybdis_set_pointer_dragscroll_enabled(record->event.pressed);
-	    if(record->event.pressed) {
-	        timer = timer_read();
-	    } else {
-		if (timer_elapsed(timer) < TAPPING_TERM) {
-		    SEND_STRING(";");
-		}
-	    }
-	    break;
-        case F_LABEL:
+	    case CTLESC:
+	        charybdis_set_pointer_sniping_enabled(record->event.pressed);
+	        break;
+	    case SCLN_SCR:
+	        charybdis_set_pointer_dragscroll_enabled(record->event.pressed);
+	        if(record->event.pressed) {
+	            timer = timer_read();
+	        } else {
+		        if (timer_elapsed(timer) < TAPPING_TERM) {
+		            SEND_STRING(";");
+		        }
+	        }
+	        break;
+        case G_LABEL:
     	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-            	tap_hold_keycode = KC_F;
+            	tap_hold_keycode = KC_G;
+                timer = timer_read();
+            } else {
+                handle_tap_hold_keycode(&tap_hold_keycode, timer);
+            }
+            break;
+        case KC_BTN2:
+    	    handle_tap_hold_keycode(&tap_hold_keycode, timer);
+            if(record->event.pressed) {
+            	tap_hold_keycode = KC_BTN2;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
