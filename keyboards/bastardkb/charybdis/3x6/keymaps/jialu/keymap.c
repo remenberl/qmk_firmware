@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-       CTLESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,			             KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS,SCLN_SCR, KC_TRNS,
+       CTLESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_TRNS,			             KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS,SCLN_SCR, KC_TRNS,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -206,10 +206,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CTLESC:
 	        charybdis_set_pointer_sniping_enabled(record->event.pressed);
 	        break;
-	case SCLN_SCR:
+        case SCLN_SCR:
 	        charybdis_set_pointer_dragscroll_enabled(record->event.pressed);
 	        if(record->event.pressed) {
-	            timer = timer_read();
+                if (isBarking) {
+                    SEND_STRING(";");
+                } else {
+	                timer = timer_read();
+                }
 	        } else {
 		        if (timer_elapsed(timer) < 300) {
 		            SEND_STRING(";");
@@ -294,10 +298,14 @@ void pointing_device_init_user(void) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case NUMBUT:
-            return 3000;
+            return 300;
         case SYMBUT:
             return 3000;
         case SPCSCRN:
+            return 3000;
+        case SFTLFT:
+            return 3000;
+        case GUIRT:
             return 3000;
         default:
             return TAPPING_TERM;
