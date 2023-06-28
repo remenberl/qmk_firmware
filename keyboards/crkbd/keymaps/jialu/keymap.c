@@ -685,7 +685,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case SPCSCRN:
-            return 3000;
+            return 300;
         case SFTLFT:
             return 3000;
         case GUIRT:

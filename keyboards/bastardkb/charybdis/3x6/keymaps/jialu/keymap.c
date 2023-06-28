@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
        SFTLFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       N_BACK,   M_FWD, KC_COMM,  KC_DOT,SLSH_SCH,  KC_ENT,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                            GUIRT,  NUMBUT,  KC_SPC,    SPCSCRN,  SYMBUT 
+                                            GUIRT,  NUMBUT,  KC_SPC,    SPCSCRN,  SYMBUT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -302,7 +302,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case SYMBUT:
             return 3000;
         case SPCSCRN:
-            return 3000;
+            return 300;
         case SFTLFT:
             return 3000;
         case GUIRT:
