@@ -14,6 +14,9 @@
 
 #define NO_ACTION_ONESHOT
 
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+#define TAPPING_TERM_PER_KEY
+
 #if defined MH_MODULE_TRACKPOINT && defined PS2_MOUSE_ENABLE
   // clock on pin 1 (d0, int0)
   #define PS2_CLOCK_PORT PORTD

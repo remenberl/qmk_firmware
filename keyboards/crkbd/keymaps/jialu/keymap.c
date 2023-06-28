@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 enum custom_keycodes {
-  F_LABEL = SAFE_RANGE,
+  G_LABEL = SAFE_RANGE,
   SCLN_SCR,
   SLSH_SCH,
   Y_LWIN,
@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        ALTTAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                       Y_LWIN,  U_RWIN,    KC_I,    KC_O,    KC_P, KC_BSPC,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-       CTLESC,    KC_A,    KC_S,    KC_D, F_LABEL,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,SCLN_SCR, KC_QUOT,
+       CTLESC,    KC_A,    KC_S,    KC_D,    KC_F, G_LABEL,                         KC_H,    KC_J,    KC_K,    KC_L,SCLN_SCR, KC_QUOT,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
        SFTLFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       N_BACK,   M_FWD, KC_COMM,  KC_DOT,SLSH_SCH,  ENTMOU,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -498,13 +498,10 @@ const char code_to_name_extra[30] = {
 
 void handle_tap_hold_keycode(uint16_t* keycode, uint16_t timer) {
     if (*keycode == 0) return;
-    uint16_t tapping_term = 170;
-    if (*keycode == KC_N || *keycode == KC_M) {
-        tapping_term = 300;
-    }
+    uint16_t tapping_term = 300;
     // Mod key is on. No need to process tap/hold.
     if (!isSneaking && !isBarking && timer_elapsed(timer) >= tapping_term) {
-        if (*keycode == KC_F || *keycode == KC_SCLN || *keycode == KC_SLSH || *keycode == KC_Y || *keycode == KC_U) {
+        if (*keycode == KC_G || *keycode == KC_SCLN || *keycode == KC_SLSH || *keycode == KC_Y || *keycode == KC_U) {
             register_code(KC_LGUI);
             register_code(KC_LSFT);
             tap_code(*keycode);
@@ -543,11 +540,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case ENTMOU:
             strcpy(keystr, "ENTER   ");
         case SFTLFT:
-            if (record->event.pressed) {
-                isBarking = true;
-            } else {
-                isBarking = false;
-            }
+	    isBarking = record->event.pressed;
             if (keystr[0] == '\0') {
                 strcpy(keystr, "SFT  LFT");
             }
@@ -555,12 +548,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CTLESC:
             strcpy(keystr, "CTL  ESC");
         case GUIRT:
-            if (record->event.pressed) {
-                isSneaking = true;
-            } else {
-                isSneaking = false;
-            }
-            if (keystr[0] == '\0') {
+            isSneaking = record->event.pressed;
+	    if (keystr[0] == '\0') {
                 strcpy(keystr, "CMD  RGT");
             }
             break;
@@ -600,10 +589,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
     }
     switch(keycode) {
-        case F_LABEL:
-            keycode = 9;
+        case G_LABEL:
+            keycode = 10;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
-                tap_hold_keycode = KC_F;
+                tap_hold_keycode = KC_G;
                 timer = timer_read();
             } else {
                 handle_tap_hold_keycode(&tap_hold_keycode, timer);
@@ -611,6 +601,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case SCLN_SCR:
             keycode = 51;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
                 tap_hold_keycode = KC_SCLN;
                 timer = timer_read();
@@ -620,6 +611,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case SLSH_SCH:
             keycode = 56;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
                 tap_hold_keycode = KC_SLSH;
                 timer = timer_read();
@@ -629,6 +621,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case Y_LWIN:
             keycode = 28;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
                 tap_hold_keycode = KC_Y;
                 timer = timer_read();
@@ -638,6 +631,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case U_RWIN:
             keycode = 24;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
                 tap_hold_keycode = KC_U;
                 timer = timer_read();
@@ -647,6 +641,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case N_BACK:
             keycode = 17;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
                 tap_hold_keycode = KC_N;
                 timer = timer_read();
@@ -656,6 +651,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case M_FWD:
             keycode = 16;
+            handle_tap_hold_keycode(&tap_hold_keycode, timer);
             if(record->event.pressed) {
                 tap_hold_keycode = KC_M;
                 timer = timer_read();
@@ -684,4 +680,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     sprintf(keylog_str, "%c%dx%d %s", on_left ? 'L' : 'R', record->event.key.row % 4, record->event.key.col, keystr);
 #endif
     return true;
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SPCSCRN:
+            return 3000;
+        case SFTLFT:
+            return 3000;
+        case GUIRT:
+            return 1000;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SPCSCRN:
+            return false;
+        default:
+            return true;
+    }
 }
