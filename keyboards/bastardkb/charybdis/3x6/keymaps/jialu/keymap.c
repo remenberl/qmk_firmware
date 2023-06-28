@@ -78,11 +78,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------|--------|                    |--------|--------+--------+--------+--------+--------|
-       CTLESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_TRNS,			             KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS,SCLN_SCR, KC_TRNS,
+       CTLESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,			             KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS,SCLN_SCR, KC_TRNS,
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_BTN3, KC_TRNS, KC_BTN2,    KC_TRNS, KC_TRNS
+                                          KC_BTN3, KC_TRNS, KC_BTN1,    KC_TRNS, KC_TRNS
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -306,9 +306,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case SFTLFT:
             return 3000;
         case GUIRT:
-            return 3000;
+            return 1000;
         default:
             return TAPPING_TERM;
     }
 }
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SPCSCRN:
+            return false;
+        default:
+            return true;
+    }
+}
