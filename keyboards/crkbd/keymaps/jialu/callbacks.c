@@ -54,7 +54,7 @@ void matrix_scan_user(void) {
     static bool has_ran_yet;
     if (!has_ran_yet) {
         has_ran_yet = true;
-        startup_user();
+        // startup_user();
     }
 
 #if defined(RGB_MATRIX_REST_MODE)

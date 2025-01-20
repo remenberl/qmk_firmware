@@ -5,7 +5,7 @@ SRC += $(FOLDER_PATH)/jialu.c \
 # https://github.com/manna-harbour/qmk_firmware/blob/crkbd/keyboards/crkbd/keymaps/manna-harbour/readme.org
 
 SPLIT_KEYBOARD=yes
-BOOTLOADER=qmk-dfu
+BOOTLOADER=rp2040
 # BOOTLOADER=atmel-dfu
 # BOOTLOADER=caterina
 
@@ -80,7 +80,7 @@ endif
 
 ifeq ($(strip $(MH_RGB)), matrix)
   RGB_MATRIX_ENABLE = yes
-  RGB_MATRIX_DRIVER = WS2812
+  RGB_MATRIX_DRIVER = ws2812
   SRC += $(FOLDER_PATH)/rgb_matrix_stuff.c
   OPT_DEFS += -DCUSTOM_RGB_MATRIX
 else ifeq ($(strip $(MH_RGB)), light)

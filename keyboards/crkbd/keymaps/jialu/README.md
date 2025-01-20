@@ -9,11 +9,11 @@ $ arch -x86_64 brew install avr-gcc
 ## Build Keymap
 Left: 
 ```
-$ sudo make crkbd:jialu:avrdude BOOTLOADER=caterina MH_MODULE=no_oled
+$ qmk flash -kb crkbd -km jialu -e CONVERT_TO=kb2040 -j 0
 ```
 Right:
 ```
-sudo make crkbd:jialu:dfu BOOTLOADER=qmk-dfu
+$ qmk flash -kb crkbd -km jialu -e CONVERT_TO=blok -j 0
 ```
 
 Push the reset button
