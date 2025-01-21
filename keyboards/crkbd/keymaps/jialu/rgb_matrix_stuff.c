@@ -17,6 +17,8 @@ void rgb_matrix_layer_helper(uint8_t hue, uint8_t sat, uint8_t val, uint8_t mode
         {
             uint16_t time = scale16by8(g_rgb_timer / 24, speed);
             hsv.v         = scale8(abs8(sin8(time) - 128) * 2, hsv.v);
+            // Mapped to [30, 200]
+            hsv.v = hsv.v * 200 / 256 + 30;
             RGB rgb       = hsv_to_rgb(hsv);
             for (uint8_t i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
                 if (HAS_FLAGS(g_led_config.flags[i], led_type)) {
