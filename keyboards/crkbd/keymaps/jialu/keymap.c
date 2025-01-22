@@ -50,7 +50,7 @@ enum custom_keycodes {
 #define RGTWIN LSA(KC_K)
 #define ALTTAB LALT_T(KC_TAB)
 #define CTLESC LCTL_T(KC_ESC)
-#define RSFDEL RSFT_T(KC_DEL)
+#define ALTDEL RALT_T(KC_DEL)
 #define GUIRT  LGUI_T(KC_RGHT)
 #define SFTLFT LSFT_T(KC_LEFT)
 #define ENTMOU LT(4,KC_ENT)
@@ -81,6 +81,17 @@ enum custom_keycodes {
 
 #define MC_SFAL   MT(MOD_LSFT|MOD_LALT|MOD_RSFT|MOD_RALT,KC_NO) // Shift-alt
 
+const uint16_t PROGMEM combo_SF[] = {KC_S, KC_F, COMBO_END};
+const uint16_t PROGMEM combo_DF[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM combo_CV[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM combo_VB[] = {KC_V, KC_B, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(combo_SF, LSG(KC_J)),
+    COMBO(combo_DF, LSG(KC_SPC)),
+    COMBO(combo_CV, PRETAB),
+    COMBO(combo_VB, NXTTAB),
+};
+
 /* Keymap - @jialu*/
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* BASE (ALPHAS) */
@@ -92,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       N_BACK,   M_FWD, KC_COMM,  KC_DOT, KC_SLSH,  ENTMOU,
   //|--------+--------+--------+--------+--------+--------|--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,   MO(1),  KC_SPC,    SPCSCRN,   MO(2),  RSFDEL
+                                          KC_LGUI,   MO(1),  KC_SPC,    SPCSCRN,   MO(2),  ALTDEL
                                       //`--------------------------'  `--------------------------'
   ),
  
@@ -567,8 +578,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 strcpy(keystr, "ALT  TAB");
             }
             break;
-        case RSFDEL:
-            strcpy(keystr, "SFT  DEL");
+        case ALTDEL:
+            strcpy(keystr, "ALT  DEL");
             break;
         case KC_BSPC:
             strcpy(keystr, "BS      ");
